@@ -123,9 +123,12 @@ if strcmp(get(handles.SNR_value,'string'), 'All')
         % Update the corresponding BER value in the output table
         SNR_values(index,2) = bit_error;
         
-        % Plot the recevied signal
-        semilogy(SNR_values)
     end;
+    
+    % Plot SNR vs BER
+    final_x = SNR_values(:,1);
+    final_y = SNR_values(:,2);
+    semilogy(final_x,final_y);
     
     % Update handles
     set(handles.SNR_output,'Data',SNR_values);
@@ -140,7 +143,7 @@ else
     txPower = mean(txSequence.^2); % Power of transmitted sequence
     
     % Compute noise based on the SNR
-    noise = sqrt(txPower/(2*SNR_value))*(randn(size(txSequence))+1j*randn(size(txSequence)));
+    noise = sqrt(txPower/(2*db2pow(SNR_value)))*(randn(size(txSequence))+1j*randn(size(txSequence)));
     
     % Compute the received signal
     rxSequence = txSequence + noise;
@@ -163,8 +166,8 @@ else
     % Update the SNR/BER value
     set(handles.SNR_output,'Data',{SNR_value,bit_error;})
     
-    % Plot the recevied signal
-    semilogy(rxSequence);
+    % Plot SNR vs BER
+    stem(SNR_value,bit_error);
 end
 
 
