@@ -118,7 +118,7 @@ if strcmp(get(handles.SNR_value,'string'), 'All')
         end;
         
         % Compute the BER
-        bit_error = biterr(txSequence,rxSequence);
+        bit_error = biterr(txSequence,rxSequence)/length(txSequence);
         
         % Update the corresponding BER value in the output table
         SNR_values(index,2) = bit_error;
@@ -161,7 +161,7 @@ else
     end
     
     % Compute the BER
-    bit_error = biterr(txSequence,rxSequence);
+    bit_error = biterr(txSequence,rxSequence)/length(txSequence);
     
     % Update the SNR/BER value
     set(handles.SNR_output,'Data',{SNR_value,bit_error;})
